@@ -429,10 +429,10 @@ class MySQL_Info(object):
             self.__get_master_status()
 
         if 'slave_status' in wanted:
-            self.__get_slave_status()
+            self.__get_replica_status()
 
         if 'slave_hosts' in wanted:
-            self.__get_slaves()
+            self.__get_replicas()
 
     def __get_engines(self):
         """Get storage engines info."""
@@ -514,7 +514,7 @@ class MySQL_Info(object):
                 for vname, val in iteritems(line):
                     self.info['master_status'][vname] = self.__convert(val)
 
-    def __get_slave_status(self):
+    def __get_replica_status(self):
         """Get slave status if the instance is a slave."""
         query = self.command_resolver.resolve_command("SHOW SLAVE STATUS")
         res = self.__exec_sql(query)
@@ -536,13 +536,18 @@ class MySQL_Info(object):
                     if vname not in ('Master_Host', 'Master_Port', 'Master_User'):
                         self.info['slave_status'][host][port][user][vname] = self.__convert(val)
 
-    def __get_slaves(self):
+    def __get_replicas(self):
         """Get slave hosts info if the instance is a master."""
         query = self.command_resolver.resolve_command("SHOW SLAVE HOSTS")
         res = self.__exec_sql(query)
         if res:
             for line in res:
-                srv_id = line['Server_id']
+                # DEBUG
+                # srv_id = line['Server_id']
+                try:
+                    srv_id = line['Server_id']
+                except Exception as e:
+                    self.module.fail_json("%s, Query: '%s', Result line: '%s'" % (e, query, line))
                 if srv_id not in self.info['slave_hosts']:
                     self.info['slave_hosts'][srv_id] = {}
 
