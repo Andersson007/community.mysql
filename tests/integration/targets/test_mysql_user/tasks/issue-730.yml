@@ -1,0 +1,34 @@
+---
+- vars:
+    mysql_parameters: &mysql_params
+      login_user: '{{ mysql_user }}'
+      login_password: '{{ mysql_password }}'
+      login_host: '{{ mysql_host }}'
+      login_port: '{{ mysql_primary_port }}'
+  block:
+    - name: Set vars for test case #730
+      ansible.builtin.set_fact:
+        user_name: 'issue-730'
+
+    - name: 'Create user for test case #730'
+      community.mysql.mysql_user:
+        <<: *mysql_params
+        name: '{{ user_name }}'
+        password: '{{ user_password_1 }}'
+        priv: '*.*:SELECT,PROCESS,BINLOG MONITOR,REPLICATION SLAVE,SLAVE MONITOR'
+        state: present
+      check_mode: '{{ enable_check_mode | default(false) }}'
+      register: result
+
+    - name: 'Assert that mysql_user is idempotent for test case #730'
+      assert:
+        that:
+          - not result.changed
+      when: enable_check_mode | default(false)
+
+    - name: 'Drop user for test case #730'
+      community.mysql.mysql_user:
+        <<: *mysql_params
+        name: '{{ user_name }}'
+        state: absent
+      when: not (enable_check_mode | default(false)) 

@@ -446,6 +446,11 @@ def user_mod(cursor, user, host, host_all, password, encrypted,
         if new_priv is not None:
             curr_priv = privileges_get(cursor, user, host, maria_role)
 
+            for db_table in list(curr_priv.keys()):
+                curr_priv[db_table] = sorted(curr_priv[db_table])
+            for db_table in list(new_priv.keys()):
+                new_priv[db_table] = sorted(new_priv[db_table])
+
             # If the user has privileges on a db.table that doesn't appear at all in
             # the new specification, then revoke all privileges on it.
             if not append_privs and not subtract_privs:

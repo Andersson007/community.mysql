@@ -169,7 +169,7 @@
         host_all: yes
         password: '{{ user_password_1 }}'
       register: result
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: check fail message
       assert:
@@ -313,3 +313,17 @@
       # Test that mysql_user still works with default role set
       # (https://github.com/ansible-collections/community.mysql/issues/710)
     - include_tasks: issue-710.yml
+
+    # Test that mysql_user works correctly in check mode with specific privileges
+    # (https://github.com/ansible-collections/community.mysql/issues/730)
+    - name: Mysql_user - test idempotency issue 730
+      include_tasks: issue-730.yml
+      vars:
+        enable_check_mode: no
+      when: db_engine == 'mariadb'
+
+    - name: Mysql_user - test idempotency issue 730 (check mode)
+      include_tasks: issue-730.yml
+      vars:
+        enable_check_mode: yes
+      when: db_engine == 'mariadb'
