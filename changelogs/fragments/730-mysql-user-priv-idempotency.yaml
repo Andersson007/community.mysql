@@ -1,2 +1,2 @@
 bugfixes:
-  - mysql_user - the module was not idempotent in check mode on MariaDB when the order of provided privileges did not match the canonical order returned by the database. The module now sorts privileges before comparison to fix this. (https://github.com/ansible-collections/community.mysql/issues/730) 
+  - mysql_user - the module was not idempotent in check mode on MariaDB. This was caused by the order of provided privileges not matching the canonical order returned by the database, and by MariaDB reporting privilege synonyms (e.g., `BINLOG MONITOR` for `REPLICATION CLIENT`). The module now sorts and normalizes privileges before comparison to fix this. (https://github.com/ansible-collections/community.mysql/issues/730) 

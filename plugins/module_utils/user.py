@@ -375,7 +375,7 @@ def user_mod(cursor, user, host, host_all, password, encrypted,
                 module.fail_json(msg="The server version does not match the requirements "
                                      "for password_expire parameter. See module's documentation.")
             update = False
-            mariadb_role = True if "mariadb" in str(impl.__name__) else False
+            mariadb_role = True if "mariadb" in str(impl.__name__).lower() else False
             current_password_policy = get_password_expiration_policy(cursor, user, host, maria_role=mariadb_role)
             password_expired = is_password_expired(cursor, user, host)
             # Check if changes needed to be applied.
@@ -445,6 +445,24 @@ def user_mod(cursor, user, host, host_all, password, encrypted,
         # Handle privileges
         if new_priv is not None:
             curr_priv = privileges_get(cursor, user, host, maria_role)
+
+            if 'mariadb' in str(impl.__name__).lower():
+                for db_table in list(curr_priv.keys()):
+                    new_privs_list = []
+                    for p in curr_priv[db_table]:
+                        if p == 'BINLOG MONITOR':
+                            new_privs_list.append('REPLICATION CLIENT')
+                        else:
+                            new_privs_list.append(p)
+                    curr_priv[db_table] = new_privs_list
+                for db_table in list(new_priv.keys()):
+                    new_privs_list = []
+                    for p in new_priv[db_table]:
+                        if p == 'REPLICATION CLIENT':
+                            new_privs_list.append('BINLOG MONITOR')
+                        else:
+                            new_privs_list.append(p)
+                    new_priv[db_table] = new_privs_list
 
             for db_table in list(curr_priv.keys()):
                 curr_priv[db_table] = sorted(curr_priv[db_table])

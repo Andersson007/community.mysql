@@ -10,7 +10,7 @@
       ansible.builtin.set_fact:
         user_name: 'issue-730'
 
-    - name: 'Create user for test case #730'
+    - name: Create user for test case #730
       community.mysql.mysql_user:
         <<: *mysql_params
         name: '{{ user_name }}'
@@ -20,13 +20,13 @@
       check_mode: '{{ enable_check_mode | default(false) }}'
       register: result
 
-    - name: 'Assert that mysql_user is idempotent for test case #730'
+    - name: Assert that mysql_user is idempotent for test case #730
       assert:
         that:
-          - not result.changed
+          - result is not changed
       when: enable_check_mode | default(false)
 
-    - name: 'Drop user for test case #730'
+    - name: Drop user for test case #730
       community.mysql.mysql_user:
         <<: *mysql_params
         name: '{{ user_name }}'
