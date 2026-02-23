@@ -347,6 +347,7 @@ executed_commands:
 import os
 import subprocess
 import traceback
+import shlex
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.community.mysql.plugins.module_utils.database import mysql_quote_identifier
@@ -359,8 +360,7 @@ from ansible_collections.community.mysql.plugins.module_utils.mysql import (
     get_server_version,
 )
 from ansible_collections.community.mysql.plugins.module_utils.version import LooseVersion
-from ansible.module_utils.six.moves import shlex_quote
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 
 executed_commands = []
 
@@ -405,46 +405,46 @@ def db_dump(module, host, user, password, db_name, target, all_databases, port,
     # If defined, mysqldump demands --defaults-extra-file be the first option
     if config_file:
         if restrict_config_file:
-            cmd.append("--defaults-file=%s" % shlex_quote(config_file))
+            cmd.append("--defaults-file=%s" % shlex.quote(config_file))
         else:
-            cmd.append("--defaults-extra-file=%s" % shlex_quote(config_file))
+            cmd.append("--defaults-extra-file=%s" % shlex.quote(config_file))
 
     if check_implicit_admin:
         cmd.append("--user=root --password=''")
     else:
         if user is not None:
-            cmd.append("--user=%s" % shlex_quote(user))
+            cmd.append("--user=%s" % shlex.quote(user))
 
         if password is not None:
             if not unsafe_password:
-                cmd.append("--password=%s" % shlex_quote(password))
+                cmd.append("--password=%s" % shlex.quote(password))
             else:
                 cmd.append("--password=%s" % password)
 
     if ssl_cert is not None:
-        cmd.append("--ssl-cert=%s" % shlex_quote(ssl_cert))
+        cmd.append("--ssl-cert=%s" % shlex.quote(ssl_cert))
     if ssl_key is not None:
-        cmd.append("--ssl-key=%s" % shlex_quote(ssl_key))
+        cmd.append("--ssl-key=%s" % shlex.quote(ssl_key))
     if ssl_ca is not None:
-        cmd.append("--ssl-ca=%s" % shlex_quote(ssl_ca))
+        cmd.append("--ssl-ca=%s" % shlex.quote(ssl_ca))
     if force:
         cmd.append("--force")
     if socket is not None:
-        cmd.append("--socket=%s" % shlex_quote(socket))
+        cmd.append("--socket=%s" % shlex.quote(socket))
     else:
-        cmd.append("--host=%s --port=%i" % (shlex_quote(host), port))
+        cmd.append("--host=%s --port=%i" % (shlex.quote(host), port))
 
     if all_databases:
         cmd.append("--all-databases")
     elif len(db_name) > 1:
         cmd.append("--databases {0}".format(' '.join(db_name)))
     else:
-        cmd.append("%s" % shlex_quote(' '.join(db_name)))
+        cmd.append("%s" % shlex.quote(' '.join(db_name)))
 
     if skip_lock_tables:
         cmd.append("--skip-lock-tables")
     if (encoding is not None) and (encoding != ""):
-        cmd.append("--default-character-set=%s" % shlex_quote(encoding))
+        cmd.append("--default-character-set=%s" % shlex.quote(encoding))
     if single_transaction:
         cmd.append("--single-transaction=true")
     if quick:
@@ -476,11 +476,11 @@ def db_dump(module, host, user, password, db_name, target, all_databases, port,
     cmd = ' '.join(cmd)
 
     if path:
-        cmd = '%s | %s > %s' % (cmd, path, shlex_quote(target))
+        cmd = '%s | %s > %s' % (cmd, path, shlex.quote(target))
         if pipefail:
             cmd = 'set -o pipefail && ' + cmd
     else:
-        cmd += " > %s" % shlex_quote(target)
+        cmd += " > %s" % shlex.quote(target)
 
     executed_commands.append(cmd)
 
@@ -511,40 +511,40 @@ def db_import(module, host, user, password, db_name, target, all_databases, port
     # --defaults-file must go first, or errors out
     if config_file:
         if restrict_config_file:
-            cmd.append("--defaults-file=%s" % shlex_quote(config_file))
+            cmd.append("--defaults-file=%s" % shlex.quote(config_file))
         else:
-            cmd.append("--defaults-extra-file=%s" % shlex_quote(config_file))
+            cmd.append("--defaults-extra-file=%s" % shlex.quote(config_file))
 
     if check_implicit_admin:
         cmd.append("--user=root --password=''")
     else:
         if user:
-            cmd.append("--user=%s" % shlex_quote(user))
+            cmd.append("--user=%s" % shlex.quote(user))
 
         if password:
             if not unsafe_password:
-                cmd.append("--password=%s" % shlex_quote(password))
+                cmd.append("--password=%s" % shlex.quote(password))
             else:
                 cmd.append("--password=%s" % password)
 
     if ssl_cert is not None:
-        cmd.append("--ssl-cert=%s" % shlex_quote(ssl_cert))
+        cmd.append("--ssl-cert=%s" % shlex.quote(ssl_cert))
     if ssl_key is not None:
-        cmd.append("--ssl-key=%s" % shlex_quote(ssl_key))
+        cmd.append("--ssl-key=%s" % shlex.quote(ssl_key))
     if ssl_ca is not None:
-        cmd.append("--ssl-ca=%s" % shlex_quote(ssl_ca))
+        cmd.append("--ssl-ca=%s" % shlex.quote(ssl_ca))
     if force:
         cmd.append("-f")
     if socket is not None:
-        cmd.append("--socket=%s" % shlex_quote(socket))
+        cmd.append("--socket=%s" % shlex.quote(socket))
     else:
-        cmd.append("--host=%s" % shlex_quote(host))
+        cmd.append("--host=%s" % shlex.quote(host))
         cmd.append("--port=%i" % port)
     if (encoding is not None) and (encoding != ""):
-        cmd.append("--default-character-set=%s" % shlex_quote(encoding))
+        cmd.append("--default-character-set=%s" % shlex.quote(encoding))
     if not all_databases:
         cmd.append("--one-database")
-        cmd.append(shlex_quote(''.join(db_name)))
+        cmd.append(shlex.quote(''.join(db_name)))
 
     comp_prog_path = None
     if os.path.splitext(target)[-1] == '.gz':
@@ -577,13 +577,13 @@ def db_import(module, host, user, password, db_name, target, all_databases, port
             # FYI: passing the `shell=True` argument to p2 = subprocess.Popen()
             # doesn't solve the problem.
             cmd = " ".join(cmd)
-            cmd = "%s -dc %s | %s" % (comp_prog_path, shlex_quote(target), cmd)
+            cmd = "%s -dc %s | %s" % (comp_prog_path, shlex.quote(target), cmd)
             rc, stdout, stderr = module.run_command(cmd, use_unsafe_shell=True)
             return rc, stdout, stderr
 
     else:
         cmd = ' '.join(cmd)
-        cmd += " < %s" % shlex_quote(target)
+        cmd += " < %s" % shlex.quote(target)
         executed_commands.append(cmd)
         rc, stdout, stderr = module.run_command(cmd, use_unsafe_shell=True)
         return rc, stdout, stderr

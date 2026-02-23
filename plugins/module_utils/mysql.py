@@ -14,9 +14,9 @@ from functools import reduce
 __metaclass__ = type
 
 import os
+import configparser
 
-from ansible.module_utils.six.moves import configparser
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 
 try:
     import pymysql as mysql_driver

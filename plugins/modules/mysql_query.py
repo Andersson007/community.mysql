@@ -146,7 +146,7 @@ from ansible_collections.community.mysql.plugins.module_utils.mysql import (
     mysql_driver_fail_msg,
     set_session_vars,
 )
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 
 DML_QUERY_KEYWORDS = ('INSERT', 'UPDATE', 'DELETE', 'REPLACE')
 # TRUNCATE is not DDL query but it also returns 0 rows affected:

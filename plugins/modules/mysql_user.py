@@ -450,7 +450,7 @@ from ansible_collections.community.mysql.plugins.module_utils.user import (
     user_exists,
     user_mod,
 )
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 
 
 # ===========================================

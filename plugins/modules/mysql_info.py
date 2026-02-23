@@ -327,7 +327,7 @@ from ansible_collections.community.mysql.plugins.module_utils.user import (
     get_user_implementation,
     user_is_locked,
 )
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 
 
 # ===========================================

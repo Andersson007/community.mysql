@@ -315,7 +315,7 @@ from ansible_collections.community.mysql.plugins.module_utils.mysql import (
     mysql_driver_fail_msg,
     mysql_common_argument_spec,
 )
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 
 executed_queries = []
 

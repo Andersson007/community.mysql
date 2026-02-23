@@ -334,7 +334,7 @@ from ansible_collections.community.mysql.plugins.module_utils.user import (
     privileges_grant,
     privileges_unpack,
 )
-from ansible.module_utils._text import to_native
+from ansible.module_utils.common.text.converters import to_native
 
 
 def normalize_users(module, users, is_mariadb=False):

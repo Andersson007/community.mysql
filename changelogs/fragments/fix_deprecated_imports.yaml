@@ -1,0 +1,4 @@
+minor_changes:
+  - Update imports from ansible.module_utils._text to use ansible.module_utils.common.text.converters
+breaking_changes:
+  - Update imports from ansible.module_utils.six to use their python3 equivalent. This change will make this collection incompatible for managed hosts on python2.7.
