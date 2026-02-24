@@ -86,8 +86,8 @@ EXAMPLES = r'''
     login_db: acme
     query: SELECT * FROM acme WHERE id = %s AND story = %s
     positional_args:
-    - 1
-    - test
+      - 1
+      - test
 
 - name: Select query to test_db with named_args
   community.mysql.mysql_query:
@@ -101,8 +101,8 @@ EXAMPLES = r'''
   community.mysql.mysql_query:
     login_db: test_db
     query:
-    - INSERT INTO articles (id, story) VALUES (2, 'my_long_story')
-    - INSERT INTO prices (id, price) VALUES (123, '100.00')
+      - INSERT INTO articles (id, story) VALUES (2, 'my_long_story')
+      - INSERT INTO prices (id, price) VALUES (123, '100.00')
     single_transaction: true
 '''
 

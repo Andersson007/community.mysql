@@ -112,23 +112,23 @@ EXAMPLES = r'''
   become: true
   community.mysql.mysql_info:
     filter:
-    - databases
-    - version
+      - databases
+      - version
 
 - name: Collect info about databases and version using ~alice/.my.cnf as a credential file
   become: true
   community.mysql.mysql_info:
     config_file: /home/alice/.my.cnf
     filter:
-    - databases
-    - version
+      - databases
+      - version
 
 - name: Collect info about databases including empty and excluding their sizes
   become: true
   community.mysql.mysql_info:
     config_file: /home/alice/.my.cnf
     filter:
-    - databases
+      - databases
     exclude_fields: db_size
     return_empty_dbs: true
 

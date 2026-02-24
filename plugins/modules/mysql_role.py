@@ -197,8 +197,8 @@ EXAMPLES = r'''
     state: present
     priv: '*.*:ALL'
     members:
-    - 'alice@%'
-    - 'bob@%'
+      - 'alice@%'
+      - 'bob@%'
 
 - name: Same as above but do not run SET DEFAULT ROLE ALL TO each member
   community.mysql.mysql_role:
@@ -206,8 +206,8 @@ EXAMPLES = r'''
     state: present
     priv: '*.*:ALL'
     members:
-    - 'alice@%'
-    - 'bob@%'
+      - 'alice@%'
+      - 'bob@%'
     set_default_role_all: false
 
 # Assuming that the role developers exists,
@@ -218,7 +218,7 @@ EXAMPLES = r'''
     state: present
     append_members: true
     members:
-    - 'joe@localhost'
+      - 'joe@localhost'
 
 # Create role readers with the SELECT privilege
 # on all tables in the fiction database
@@ -250,7 +250,7 @@ EXAMPLES = r'''
     state: present
     name: readers
     members:
-    - 'joe@localhost'
+      - 'joe@localhost'
     detach_members: true
 
 - name: Remove the role readers if exists
@@ -279,7 +279,7 @@ EXAMPLES = r'''
     state: present
     name: business
     members:
-    - marketing
+      - marketing
 
 - name: Ensure the role foo does not have the DELETE privilege
   community.mysql.mysql_role:
@@ -296,8 +296,8 @@ EXAMPLES = r'''
     append_members: true
     members_must_exist: false
     members:
-    - 'existing_user@localhost'
-    - 'not_existing_user@localhost'
+      - 'existing_user@localhost'
+      - 'not_existing_user@localhost'
 
 - name: Detach some members from a role and ignore not-existent users
   community.mysql.mysql_role:
@@ -306,8 +306,8 @@ EXAMPLES = r'''
     detach_members: true
     members_must_exist: false
     members:
-    - 'existing_user@localhost'
-    - 'not_existing_user@localhost'
+      - 'existing_user@localhost'
+      - 'not_existing_user@localhost'
 
 - name: Create role without binary logging
   community.mysql.mysql_role:
