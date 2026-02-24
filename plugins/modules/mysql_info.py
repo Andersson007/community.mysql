@@ -134,36 +134,36 @@ EXAMPLES = r'''
 
 - name: Clone users from one server to another
   block:
-  # Step 1
-  - name: Fetch information from a source server
-    delegate_to: server_source
-    community.mysql.mysql_info:
-      filter:
-        - users_info
-    register: result
+    # Step 1
+    - name: Fetch information from a source server
+      delegate_to: server_source
+      community.mysql.mysql_info:
+        filter:
+          - users_info
+      register: result
 
-  # Step 2
-  # Don't work with sha256_password and cache_sha2_password
-  - name: Clone users fetched in a previous task to a target server
-    community.mysql.mysql_user:
-      name: "{{ item.name }}"
-      host: "{{ item.host }}"
-      plugin: "{{ item.plugin | default(omit) }}"
-      plugin_hash_string: "{{ item.plugin_hash_string | default(omit) }}"
-      tls_requires: "{{ item.tls_requires | default(omit) }}"
-      priv: "{{ item.priv | default(omit) }}"
-      resource_limits: "{{ item.resource_limits | default(omit) }}"
-      locked: "{{ item.locked | default(omit) }}"
-      column_case_sensitive: true
-      state: present
-    loop: "{{ result.users_info }}"
-    loop_control:
-      label: "{{ item.name }}@{{ item.host }}"
-    when:
-      - item.name != 'root'  # In case you don't want to import admin accounts
-      - item.name != 'mariadb.sys'
-      - item.name != 'mysql'
-      - item.name != 'PUBLIC'  # MariaDB roles are not supported
+    # Step 2
+    # Don't work with sha256_password and cache_sha2_password
+    - name: Clone users fetched in a previous task to a target server
+      community.mysql.mysql_user:
+        name: "{{ item.name }}"
+        host: "{{ item.host }}"
+        plugin: "{{ item.plugin | default(omit) }}"
+        plugin_hash_string: "{{ item.plugin_hash_string | default(omit) }}"
+        tls_requires: "{{ item.tls_requires | default(omit) }}"
+        priv: "{{ item.priv | default(omit) }}"
+        resource_limits: "{{ item.resource_limits | default(omit) }}"
+        locked: "{{ item.locked | default(omit) }}"
+        column_case_sensitive: true
+        state: present
+      loop: "{{ result.users_info }}"
+      loop_control:
+        label: "{{ item.name }}@{{ item.host }}"
+      when:
+        - item.name != 'root'  # In case you don't want to import admin accounts
+        - item.name != 'mariadb.sys'
+        - item.name != 'mysql'
+        - item.name != 'PUBLIC'  # MariaDB roles are not supported
 '''
 
 RETURN = r'''
