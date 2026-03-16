@@ -706,3 +706,23 @@ releases:
     - 4.1.0.yml
     - 742-mysql_role-sql_log_bin.yml
     release_date: '2026-02-16'
+  4.2.0:
+    changes:
+      breaking_changes:
+      - Update imports from ansible.module_utils.six to use their python3 equivalent.
+        This change will make this collection incompatible for managed hosts on python2.7.
+      bugfixes:
+      - mysql_user - When creating a new user, and specifying parsec as plugin it
+        wil generate the wrong SQL query. It should be added to the same plugin check
+        as ed25519 so that it generates a query using USING PASSWORDS(%s) instead
+        of BY %s (https://github.com/ansible-collections/community.mysql/pull/779).
+      minor_changes:
+      - Update imports from ansible.module_utils._text to use ansible.module_utils.common.text.converters
+      release_summary: 'This is a minor release of the ``community.mysql`` collection.
+
+        This changelog contains all breaking changes to the modules in this collection'
+    fragments:
+    - 0-mysql_user.yaml
+    - 4.2.0.yml
+    - fix_deprecated_imports.yaml
+    release_date: '2026-03-16'
