@@ -1,0 +1,2 @@
+bugfixes:
+  - "mysql_user - When creating a new user, and specifying parsec as plugin it wil generate the wrong SQL query. It should be added to the same plugin check as ed25519 so that it generates a query using USING PASSWORDS(%s) instead of BY %s (https://github.com/ansible-collections/community.mysql/pull/779)."
