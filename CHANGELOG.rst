@@ -6,6 +6,21 @@ Community MySQL and MariaDB Collection Release Notes
 
 This changelog describes changes after version 2.0.0.
 
+v4.2.1
+======
+
+Release Summary
+---------------
+
+This is a patch release of the ``community.mysql`` collection.
+This changelog contains all changes to the modules and plugins in this collection
+that have been made after the previous release.
+
+Bugfixes
+--------
+
+- mysql_query - fix ``Value of unknown type`` error when query results contain non-JSON-serializable types such as ``decimal.Decimal`` or ``datetime``. Results are now round-tripped through ``json.dumps(default=str)`` before being returned, coercing unserializable values to their string representation (https://github.com/ansible-collections/community.mysql/issues/783).
+
 v4.2.0
 ======
 

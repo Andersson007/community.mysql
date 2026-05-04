@@ -726,3 +726,19 @@ releases:
     - 4.2.0.yml
     - fix_deprecated_imports.yaml
     release_date: '2026-03-16'
+  4.2.1:
+    changes:
+      bugfixes:
+      - mysql_query - fix ``Value of unknown type`` error when query results contain
+        non-JSON-serializable types such as ``decimal.Decimal`` or ``datetime``. Results
+        are now round-tripped through ``json.dumps(default=str)`` before being returned,
+        coercing unserializable values to their string representation (https://github.com/ansible-collections/community.mysql/issues/783).
+      release_summary: 'This is a patch release of the ``community.mysql`` collection.
+
+        This changelog contains all changes to the modules and plugins in this collection
+
+        that have been made after the previous release.'
+    fragments:
+    - 4.2.1.yml
+    - mysql_query_decimal_serialization.yaml
+    release_date: '2026-05-04'
