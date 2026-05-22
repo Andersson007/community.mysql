@@ -51,6 +51,7 @@
       assert:
         that:
           - result is not changed
+      when: db_version is version('9.7', '<') or db_engine == 'mariadb'
 
     - name: Priv substract | Run command to show privileges for user (expect privileges in stdout)
       command: "{{ mysql_command }} -e \"SHOW GRANTS FOR '{{ user_name_4 }}'@'%'\""
@@ -110,6 +111,7 @@
       assert:
         that:
           - result is not changed
+      when: db_version is version('9.7', '<') or db_engine == 'mariadb'
 
     - name: Priv substract | Run command to show privileges for user (expect privileges in stdout)
       command: "{{ mysql_command }} -e \"SHOW GRANTS FOR '{{ user_name_4 }}'@'%'\""

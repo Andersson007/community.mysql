@@ -26,7 +26,7 @@
     - db_engine == 'mysql'
     - db_version is version('8.4', '>=')
 
-- name: Add MySQL 8.4 repository
+- name: Add MySQL repository
   ansible.builtin.deb822_repository:
     name: mysql
     types: deb
@@ -34,6 +34,7 @@
     suites: jammy
     components:
       - mysql-8.4-lts
+      - mysql-9.7-lts
       - mysql-tools
     signed_by: /etc/apt/trusted.gpg.d/mysql.asc
     state: present

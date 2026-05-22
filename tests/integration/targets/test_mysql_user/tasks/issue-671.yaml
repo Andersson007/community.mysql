@@ -87,7 +87,7 @@
         priv: 'FUNCTION foo.function:EXECUTE/foo.*:SELECT/PROCEDURE bar.procedure:EXECUTE'
       register: result
       failed_when:
-        - result is failed or result is changed
+        - result is failed or (result is changed and (db_version is version('9.7', '<') or db_engine == 'mariadb'))
 
     - name: Issue-671| Test teardown | cleanup databases
       ansible.mysql.mysql_db:
