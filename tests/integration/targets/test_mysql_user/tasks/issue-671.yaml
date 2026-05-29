@@ -82,12 +82,11 @@
         session_vars:
           sql_mode: ""
         name: '{{ user_name_2 }}'
-        password: '{{ user_password_2 }}'
         state: present
         priv: 'FUNCTION foo.function:EXECUTE/foo.*:SELECT/PROCEDURE bar.procedure:EXECUTE'
       register: result
       failed_when:
-        - result is failed or (result is changed and (db_version is version('9.7', '<') or db_engine == 'mariadb'))
+        - result is failed or result is changed
 
     - name: Issue-671| Test teardown | cleanup databases
       ansible.mysql.mysql_db:

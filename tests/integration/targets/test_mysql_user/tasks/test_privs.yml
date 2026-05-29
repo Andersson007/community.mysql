@@ -101,7 +101,6 @@
         <<: *mysql_params
         name: '{{ user_name_2 }}'
         host: '%'
-        password: '{{ user_password_2 }}'
         priv: 'jmainguy.jmainguy:ALL'
         state: present
       register: result
@@ -116,7 +115,6 @@
         <<: *mysql_params
         name: '{{ user_name_2 }}'
         host: '%'
-        password: '{{ user_password_2 }}'
         priv: 'jmainguy.jmainguy:ALL'
         state: present
       register: result
@@ -125,7 +123,6 @@
       assert:
         that:
           - result is not changed
-      when: db_version is version('9.7', '<') or db_engine == 'mariadb'
 
     # ============================================================
     - name: Privs | Grant ALL to user {{ user_name_2 }}
@@ -166,7 +163,6 @@
         <<: *mysql_params
         name: '{{ user_name_2 }}'
         host: '%'
-        password: '{{ user_password_2 }}'
         priv: '*.*:CREATE USER,FILE,PROCESS,RELOAD,REPLICATION CLIENT,REPLICATION SLAVE,SHOW DATABASES,SHUTDOWN,SUPER,CREATE,DROP,EVENT,LOCK TABLES,INSERT,UPDATE,DELETE,SELECT,SHOW VIEW,GRANT'
         state: present
       register: result
@@ -181,7 +177,6 @@
         <<: *mysql_params
         name: '{{ user_name_2 }}'
         host: '%'
-        password: '{{ user_password_2 }}'
         priv: '*.*:CREATE USER,FILE,PROCESS,RELOAD,REPLICATION CLIENT,REPLICATION SLAVE,SHOW DATABASES,SHUTDOWN,SUPER,CREATE,DROP,EVENT,LOCK TABLES,INSERT,UPDATE,DELETE,SELECT,SHOW VIEW,GRANT'
         state: present
       register: result
@@ -192,7 +187,6 @@
       assert:
         that:
           - result is not changed
-      when: db_version is version('9.7', '<') or db_engine == 'mariadb'
 
     - include_tasks: utils/remove_user.yml
       vars:
