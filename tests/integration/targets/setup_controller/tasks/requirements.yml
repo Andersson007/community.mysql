@@ -33,8 +33,7 @@
     uris: http://repo.mysql.com/apt/ubuntu
     suites: jammy
     components:
-      - mysql-8.4-lts
-      - mysql-9.7-lts
+      - "mysql-{{ db_version.split('.')[:2] | join('.') }}-lts"
       - mysql-tools
     signed_by: /etc/apt/trusted.gpg.d/mysql.asc
     state: present
@@ -47,9 +46,20 @@
     name: libaio1
     update_cache: true
     state: present
+  register: libaio_result
+  ignore_errors: true
   when:
     - db_engine == 'mysql'
     - db_version is version('9.7', '>=')
+
+- name: "{{ role_name }} | Requirements | Install libaio1t64 for MySQL 9.7+ (Ubuntu 24.04+)"
+  ansible.builtin.apt:
+    name: libaio1t64
+    state: present
+  when:
+    - db_engine == 'mysql'
+    - db_version is version('9.7', '>=')
+    - libaio_result is failed
 
 - name: "{{ role_name }} | Requirements | Install Linux packages"
   ansible.builtin.apt:
