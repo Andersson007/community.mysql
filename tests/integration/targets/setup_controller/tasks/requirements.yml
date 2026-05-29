@@ -42,6 +42,15 @@
     - db_engine == 'mysql'
     - db_version is version('8.4', '>=')
 
+- name: "{{ role_name }} | Requirements | Install libaio1 for MySQL 9.7+"
+  ansible.builtin.apt:
+    name: libaio1
+    update_cache: true
+    state: present
+  when:
+    - db_engine == 'mysql'
+    - db_version is version('9.7', '>=')
+
 - name: "{{ role_name }} | Requirements | Install Linux packages"
   ansible.builtin.apt:
     name:
