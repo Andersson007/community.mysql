@@ -26,6 +26,13 @@
 
   block:
 
+    - name: Privs | Ensure test database is absent before testing
+      mysql_db:
+        <<: *mysql_params
+        name: '{{ db_name }}'
+        state: absent
+      ignore_errors: true
+
     # ============================================================
     - name: Privs | Create user with basic select privileges
       mysql_user:
