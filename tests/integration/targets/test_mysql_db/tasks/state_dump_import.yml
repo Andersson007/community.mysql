@@ -439,48 +439,51 @@
 
 ########################
 # Test import with chdir
+# MySQL 9.7+ no longer supports the SOURCE command in batch mode
+- when: db_engine == 'mariadb' or (db_engine == 'mysql' and db_version is version('9.7', '<'))
+  block:
 
-- name: Dump and Import | Create dir
-  file:
-    path: ~/subdir
-    state: directory
+    - name: Dump and Import | Create dir
+      file:
+        path: ~/subdir
+        state: directory
 
-- name: Dump and Import | Create test dump
-  shell: 'echo "SOURCE ./subdir_test.sql" > ~/original_test.sql'
+    - name: Dump and Import | Create test dump
+      shell: 'echo "SOURCE ./subdir_test.sql" > ~/original_test.sql'
 
-- name: Dump and Import | Create test source
-  shell: 'echo "SELECT 1" > ~/subdir/subdir_test.sql'
+    - name: Dump and Import | Create test source
+      shell: 'echo "SELECT 1" > ~/subdir/subdir_test.sql'
 
-- name: Dump and Import | Try to restore without chdir argument, must fail
-  mysql_db:
-    login_user: '{{ mysql_user }}'
-    login_password: '{{ mysql_password }}'
-    login_host: '{{ mysql_host }}'
-    login_port: '{{ mysql_primary_port }}'
-    name: '{{ db_name }}'
-    state: import
-    target: '~/original_test.sql'
-  ignore_errors: yes
-  register: result
-- assert:
-    that:
-      - result is failed
-      - result.msg is search('Failed to open file')
+    - name: Dump and Import | Try to restore without chdir argument, must fail
+      mysql_db:
+        login_user: '{{ mysql_user }}'
+        login_password: '{{ mysql_password }}'
+        login_host: '{{ mysql_host }}'
+        login_port: '{{ mysql_primary_port }}'
+        name: '{{ db_name }}'
+        state: import
+        target: '~/original_test.sql'
+      ignore_errors: yes
+      register: result
+    - assert:
+        that:
+          - result is failed
+          - result.msg is search('Failed to open file')
 
-- name: Dump and Import | Restore with chdir argument, must pass
-  mysql_db:
-    login_user: '{{ mysql_user }}'
-    login_password: '{{ mysql_password }}'
-    login_host: '{{ mysql_host }}'
-    login_port: '{{ mysql_primary_port }}'
-    name: '{{ db_name }}'
-    state: import
-    target: '~/original_test.sql'
-    chdir: ~/subdir
-  register: result
-- assert:
-    that:
-      - result is succeeded
+    - name: Dump and Import | Restore with chdir argument, must pass
+      mysql_db:
+        login_user: '{{ mysql_user }}'
+        login_password: '{{ mysql_password }}'
+        login_host: '{{ mysql_host }}'
+        login_port: '{{ mysql_primary_port }}'
+        name: '{{ db_name }}'
+        state: import
+        target: '~/original_test.sql'
+        chdir: ~/subdir
+      register: result
+    - assert:
+        that:
+          - result is succeeded
 
 ##########
 # Clean up
