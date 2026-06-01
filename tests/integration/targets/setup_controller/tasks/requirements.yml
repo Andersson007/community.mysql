@@ -31,7 +31,10 @@
     name: mysql
     types: deb
     uris: http://repo.mysql.com/apt/ubuntu
-    suites: "{{ ansible_distribution_release }}"
+    suites: >-
+      {{ ansible_distribution_release
+         if ansible_distribution_version is version('26.04', '<')
+         else 'noble' }}
     components:
       - "mysql-{{ db_version.split('.')[:2] | join('.') }}-lts"
       - mysql-tools
