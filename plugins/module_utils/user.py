@@ -316,8 +316,8 @@ def user_mod(cursor, user, host, host_all, password, encrypted,
                     # We cannot compare password hashes (caching_sha2_password
                     # uses a random salt), so always update the password.
                     if encrypted:
-                        module.fail_json(msg="The 'encrypted' option is not supported on MySQL 9.7.0+ "
-                                             "because the mysql_native_password plugin has been removed. "
+                        module.fail_json(msg="The 'encrypted' option is not supported by your database server "
+                                             "version because the mysql_native_password plugin has been removed. "
                                              "Use a plaintext password instead.")
                     password_changed = True
                     msg = "Password updated"
