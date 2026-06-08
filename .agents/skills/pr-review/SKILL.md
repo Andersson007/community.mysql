@@ -48,7 +48,7 @@ Produce the structured report described in the **Output Format** section.
 
 ## Review Checklist
 
-Architecture, check_mode, and Type Conversion categories are fully covered by `AGENTS.md` — apply those sections directly.
+Architecture and Type Conversion categories are fully covered by `AGENTS.md` — apply those sections directly.
 
 ### Collection Metadata
 
@@ -108,6 +108,7 @@ Architecture, check_mode, and Type Conversion categories are fully covered by `A
 ### Changelog Fragment
 
 - Fragment content is concise, written in past tense, and references the module name.
+- The changelog fragment must not be present when a pull request only contains a new Ansible module and related changes.
 
 ### Code Quality
 
@@ -115,6 +116,26 @@ Architecture, check_mode, and Type Conversion categories are fully covered by `A
 - No feature flags or backwards-compatibility shims for hypothetical future use.
 - No premature abstractions (helpers/utilities created for a single use case).
 - No security vulnerabilities: no shell injection, no unvalidated external input passed to queries, no hardcoded credentials.
+
+### Additional checks when reviewing a new Ansible module
+
+This section is also partly applicable to module interface changes such as new arguments and return values.
+
+Check thoroughly that:
+- All facts stated in the DOCUMENTATION block and in the PR description if provided are correct. Use the official documentation of the entity the module automates.
+- The module interface (arguments) is clear and follows the [module format and documentation guide](https://docs.ansible.com/projects/ansible/devel/dev_guide/developing_modules_documenting.html).
+- Check mode support must be full, unless there are technical obstacles on the underlying technology side we are automating that are impossible to overcome.
+- Check mode support must be explicitly stated in the DOCUMENTATION block under the attributes field.
+- All the options from the documentation block and all their values are covered with CI
+  - All corresponding tasks run in check mode; check if there's a task after each such task that checks the actual database state.
+  - All corresponding tasks run in real mode (without check_mode: true); check if there's a task after each such task that checks the actual database state.
+  - The same task runs again after each task to check idempotency: it must report nothing changed.
+- All the examples from the EXAMPLES block are covered with integration tests.
+- All the return values from the RETURN block are covered with integration tests.
+- All functions do one logical action, are concise, and are covered with unit tests.
+- The version_added field for the modules is set in the DOCUMENTATION block.
+  - Individual arguments as well as the returned values must have version_added set only when they are added to an existing module.
+- The DOCUMENTATION, EXAMPLE, and RETURNS sections follow the [style guide](https://docs.ansible.com/projects/ansible/devel/dev_guide/style_guide/index.html).
 
 ---
 
@@ -163,3 +184,5 @@ APPROVE / REQUEST CHANGES / COMMENT
 ```
 
 Use `N/A` for categories that do not apply to the changeset (e.g., type conversion for a docs-only PR). Be specific: always reference the file and line number when citing a finding.
+
+When reviewing a new module, save the report to a new .md file.
