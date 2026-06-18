@@ -1,0 +1,4 @@
+minor_changes:
+  - CI - MySQL 8.0.38 has been removed from the CI test matrix because
+    MySQL 8.0 reached End of Life in April 2026. The collection still
+    supports MySQL 8.0 at runtime through version-conditional code paths.

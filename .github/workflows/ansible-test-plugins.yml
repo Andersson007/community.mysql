@@ -35,7 +35,6 @@ jobs:
           - mysql
           - mariadb
         db_engine_version:
-          - '8.0.38'
           - '8.4.9'
           - '9.7.0'
           - '10.11.8'
@@ -73,28 +72,16 @@ jobs:
             db_engine_version: '11.8.7'
 
           - db_engine_name: mariadb
-            db_engine_version: '8.0.38'
-
-          - db_engine_name: mariadb
             db_engine_version: '8.4.9'
 
           - db_engine_name: mariadb
             db_engine_version: '9.7.0'
 
-          - db_engine_version: '8.0.38'
-            ansible: stable-2.17
-
           - db_engine_version: '10.11.8'
             ansible: stable-2.17
 
-          - db_engine_version: '8.0.38'
-            ansible: stable-2.21
-
           - db_engine_version: '10.11.8'
             ansible: stable-2.21
-
-          - db_engine_version: '8.0.38'
-            ansible: devel
 
           - db_engine_version: '10.11.8'
             ansible: devel
@@ -164,9 +151,7 @@ jobs:
         run: |
           db_ver="${{ matrix.db_engine_version }}"
           maj="${db_ver%.*.*}"
-          maj_min="${db_ver%.*}"
-          min="${maj_min#*.}"
-          if [[ "${{ matrix.db_engine_name }}" == "mysql" && "$maj" -eq 8 && "$min" -ge 2 ]]; then
+          if [[ "${{ matrix.db_engine_name }}" == "mysql" && "$maj" -eq 8 ]]; then
             prima_conf='[mysqld]\\nserver-id=1\\nlog-bin=/var/lib/mysql/primary-bin\\nmysql-native-password=1'
             repl1_conf='[mysqld]\\nserver-id=2\\nlog-bin=/var/lib/mysql/replica1-bin\\nmysql-native-password=1'
             repl2_conf='[mysqld]\\nserver-id=3\\nlog-bin=/var/lib/mysql/replica2-bin\\nmysql-native-password=1'

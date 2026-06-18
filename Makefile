@@ -76,9 +76,7 @@ test-integration:
 	# Setup replication and restart containers using the same subshell to keep variables alive
 	db_ver=$(db_engine_version); \
 	maj="$${db_ver%.*.*}"; \
-	maj_min="$${db_ver%.*}"; \
-	min="$${maj_min#*.}"; \
-	if [[ "$(db_engine_name)" == "mysql" && "$$maj" -eq 8 && "$$min" -ge 2 ]]; then \
+	if [[ "$(db_engine_name)" == "mysql" && "$$maj" -eq 8 ]]; then \
 		prima_conf='[mysqld]\\nserver-id=1\\nlog-bin=/var/lib/mysql/primary-bin\\nmysql-native-password=1'; \
 		repl1_conf='[mysqld]\\nserver-id=2\\nlog-bin=/var/lib/mysql/replica1-bin\\nmysql-native-password=1'; \
 		repl2_conf='[mysqld]\\nserver-id=3\\nlog-bin=/var/lib/mysql/replica2-bin\\nmysql-native-password=1'; \

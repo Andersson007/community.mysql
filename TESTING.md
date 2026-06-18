@@ -64,7 +64,6 @@ The Makefile accept the following options
 - `db_engine_version`
   - Mandatory: true
   - Choices:
-    - "8.0.38" <- mysql
     - "8.4.9" <- mysql
     - "9.7.0" <- mysql
     - "10.11.8" <- mariadb
@@ -113,14 +112,14 @@ tests will overwrite the 3 databases containers so no need to kill them in advan
 
 ```sh
 # Run all targets
-make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.0.38" connector_name="pymysql" connector_version="1.0.2"
+make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.4.9" connector_name="pymysql" connector_version="1.0.2"
 
 # A single target
-make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.0.38" connector_name="pymysql" connector_version="1.0.2" target="test_mysql_info"
+make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.4.9" connector_name="pymysql" connector_version="1.0.2" target="test_mysql_info"
 
 # Keep databases and ansible tests containers alives
 # A single target and continue on errors
-make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.0.38" connector_name="pymysql" connector_version="1.0.2" target="test_mysql_query" keep_containers_alive=1 continue_on_errors=1
+make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.4.9" connector_name="pymysql" connector_version="1.0.2" target="test_mysql_query" keep_containers_alive=1 continue_on_errors=1
 
 # If your system has an usupported version of Python:
 make local_python_version="3.10" ansible="stable-2.17" db_engine_name="mariadb" db_engine_version="11.8.7" connector_name="pymysql" connector_version="1.0.2"
