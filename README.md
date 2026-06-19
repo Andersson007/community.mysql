@@ -110,7 +110,6 @@ Here is the table for the support timeline:
 
 For MariaDB, only Long Term releases are tested. When multiple LTS are available, we test the oldest and the newest only. Usually breaking changes introduced in the versions in between are also present in the latest version.
 
-- mysql 8.0.38
 - mysql 8.4.9
 - mysql 9.7.0
 - mariadb:10.11 (collection version >= 3.10.0)

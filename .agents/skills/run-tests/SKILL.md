@@ -64,10 +64,10 @@ The project provides a Makefile (documented in `TESTING.md`) that handles spinni
 
 ```bash
 # Run all targets against MySQL 8.4.9 with pymysql 1.1.1
-make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.0.38" connector_name="pymysql" connector_version="1.1.1"
+make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.4.9" connector_name="pymysql" connector_version="1.1.1"
 
 # Run a single target
-make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.0.38" connector_name="pymysql" connector_version="1.1.1" target="test_mysql_info"
+make ansible="stable-2.17" db_engine_name="mysql" db_engine_version="8.4.9" connector_name="pymysql" connector_version="1.1.1" target="test_mysql_info"
 
 # MariaDB example
 make ansible="stable-2.17" db_engine_name="mariadb" db_engine_version="11.8.7" connector_name="pymysql" connector_version="1.1.1"
