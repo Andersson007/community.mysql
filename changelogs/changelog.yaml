@@ -765,3 +765,46 @@ releases:
     fragments:
     - 5.0.1.yml
     release_date: '2026-05-12'
+  5.1.0:
+    changes:
+      bugfixes:
+      - mysql_user - fix errors on MySQL 9.7.0+ caused by removal of SHA1() SQL function
+        and mysql_native_password plugin. The module now uses ``IDENTIFIED BY`` for
+        password management on MySQL 9.7.0+.
+      minor_changes:
+      - CI - MySQL 8.0.38 has been removed from the CI test matrix because MySQL 8.0
+        reached End of Life in April 2026. The collection still supports MySQL 8.0
+        at runtime through version-conditional code paths.
+      - CI - PyMySQL 0.9.3 and 1.0.2 have been removed from the CI test matrix. PyMySQL
+        0.9.3 is unmaintained and has an unfixed CVE-2024-36039. PyMySQL 1.0.2 is
+        redundant with 1.1.1 as both cover the same code path. PyMySQL 0.10.1 has
+        been promoted to the main test matrix.
+      release_summary: 'This is a minor release of the ``ansible.mysql`` collection.
+
+        This changelog contains all changes that have been made to this collection
+        after the previous release.'
+    fragments:
+    - 5.1.0.yml
+    - drop-mysql-8.0-ci.yml
+    - mysql-970-compat.yml
+    - trim-pymysql-ci-versions.yml
+    modules:
+    - description: Gather MySQL or MariaDB binary log information
+      name: mysql_binlog_info
+      namespace: ''
+    - description: Clone a MySQL instance from a donor server
+      name: mysql_clone
+      namespace: ''
+    - description: Manage MySQL or MariaDB Performance Schema setup tables
+      name: mysql_perf_schema
+      namespace: ''
+    - description: Add, update, or remove MySQL resource groups
+      name: mysql_resource_group
+      namespace: ''
+    - description: Gather information about MySQL resource groups
+      name: mysql_resource_group_info
+      namespace: ''
+    - description: Manage MySQL or MariaDB slow query log settings
+      name: mysql_slow_log
+      namespace: ''
+    release_date: '2026-06-25'

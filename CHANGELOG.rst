@@ -6,6 +6,36 @@ Community MySQL and MariaDB Collection Release Notes
 
 This changelog describes changes after version 2.0.0.
 
+v5.1.0
+======
+
+Release Summary
+---------------
+
+This is a minor release of the ``ansible.mysql`` collection.
+This changelog contains all changes that have been made to this collection after the previous release.
+
+Minor Changes
+-------------
+
+- CI - MySQL 8.0.38 has been removed from the CI test matrix because MySQL 8.0 reached End of Life in April 2026. The collection still supports MySQL 8.0 at runtime through version-conditional code paths.
+- CI - PyMySQL 0.9.3 and 1.0.2 have been removed from the CI test matrix. PyMySQL 0.9.3 is unmaintained and has an unfixed CVE-2024-36039. PyMySQL 1.0.2 is redundant with 1.1.1 as both cover the same code path. PyMySQL 0.10.1 has been promoted to the main test matrix.
+
+Bugfixes
+--------
+
+- mysql_user - fix errors on MySQL 9.7.0+ caused by removal of SHA1() SQL function and mysql_native_password plugin. The module now uses ``IDENTIFIED BY`` for password management on MySQL 9.7.0+.
+
+New Modules
+-----------
+
+- mysql_binlog_info - Gather MySQL or MariaDB binary log information
+- mysql_clone - Clone a MySQL instance from a donor server
+- mysql_perf_schema - Manage MySQL or MariaDB Performance Schema setup tables
+- mysql_resource_group - Add, update, or remove MySQL resource groups
+- mysql_resource_group_info - Gather information about MySQL resource groups
+- mysql_slow_log - Manage MySQL or MariaDB slow query log settings
+
 v5.0.1
 ======
 
