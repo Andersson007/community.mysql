@@ -14,6 +14,7 @@ module: mysql_replication_filter
 short_description: Manage MySQL or MariaDB replication filters
 
 description:
+  - "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_replication_filter) instead."
   - Manage replica-side replication filters declaratively.
   - MySQL uses C(CHANGE REPLICATION FILTER).
   - MariaDB uses C(SET GLOBAL replicate_*) variables.

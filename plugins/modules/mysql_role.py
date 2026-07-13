@@ -14,6 +14,7 @@ module: mysql_role
 short_description: Adds, removes, or updates a MySQL or MariaDB role
 
 description:
+   - "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_role) instead."
    - Adds, removes, or updates a MySQL or MariaDB role.
    - Roles are supported since MySQL 8.0.0 and MariaDB 10.0.5.
 

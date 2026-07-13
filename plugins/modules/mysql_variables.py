@@ -14,6 +14,7 @@ module: mysql_variables
 
 short_description: Manage MySQL or MariaDB global variables
 description:
+- "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_variables) instead."
 - Query / Set MySQL or MariaDB variables.
 author:
 - Balazs Pocze (@banyek)

@@ -14,6 +14,7 @@ DOCUMENTATION = r'''
 module: mysql_info
 short_description: Gather information about MySQL or MariaDB servers
 description:
+- "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_info) instead."
 - Gathers information about MySQL or MariaDB servers.
 
 options:

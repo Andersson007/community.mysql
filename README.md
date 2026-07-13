@@ -38,6 +38,9 @@ For more information about communication, see the [Ansible communication guide](
 
 ## Contributing
 
+> [!IMPORTANT]
+> To open issues/pull requests related **only** to MariaDB, do it in the [ansible.mysql](https://github.com/ansible-collections/ansible.mysql) collection instead.
+
 The content of this collection is made by [people](https://github.com/ansible-collections/ansible.mysql/blob/main/CONTRIBUTORS) just like you, a community of individuals collaborating on making the world better through developing automation software.
 
 We are actively accepting new contributors.
