@@ -307,7 +307,7 @@ def test_main_returns_predictive_result_in_check_mode(monkeypatch):
     )
     monkeypatch.setattr(
         'ansible_collections.ansible.mysql.plugins.modules.mysql_clone.get_server_implementation',
-        lambda _cursor: 'mysql',
+        lambda _module, _cursor: 'mysql',
     )
     monkeypatch.setattr(
         'ansible_collections.ansible.mysql.plugins.modules.mysql_clone.get_server_version',
@@ -412,7 +412,7 @@ def test_main_fails_immediately_for_fatal_execute_error(monkeypatch):
     )
     monkeypatch.setattr(
         'ansible_collections.ansible.mysql.plugins.modules.mysql_clone.get_server_implementation',
-        lambda _cursor: 'mysql',
+        lambda _module, _cursor: 'mysql',
     )
     monkeypatch.setattr(
         'ansible_collections.ansible.mysql.plugins.modules.mysql_clone.get_server_version',
@@ -477,7 +477,7 @@ def test_main_waits_after_expected_restart_error(monkeypatch):
     )
     monkeypatch.setattr(
         'ansible_collections.ansible.mysql.plugins.modules.mysql_clone.get_server_implementation',
-        lambda _cursor: 'mysql',
+        lambda _module, _cursor: 'mysql',
     )
     monkeypatch.setattr(
         'ansible_collections.ansible.mysql.plugins.modules.mysql_clone.get_server_version',
