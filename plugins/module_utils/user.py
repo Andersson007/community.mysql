@@ -191,7 +191,7 @@ def user_add(cursor, user, host, host_all, password, encrypted,
         return {'changed': True, 'password_changed': None, 'attributes': attributes}
 
     # Determine what user management method server uses
-    impl = get_user_implementation(cursor)
+    impl = get_user_implementation(module, cursor)
     old_user_mgmt = impl.use_old_user_mgmt(cursor)
 
     mogrify = do_not_mogrify_requires if old_user_mgmt else mogrify_requires
@@ -265,9 +265,9 @@ def user_add(cursor, user, host, host_all, password, encrypted,
 
     if new_priv is not None:
         for db_table, priv in new_priv.items():
-            privileges_grant(cursor, user, host, db_table, priv, tls_requires)
+            privileges_grant(module, cursor, user, host, db_table, priv, tls_requires)
     if tls_requires is not None:
-        privileges_grant(cursor, user, host, "*.*", get_grants(cursor, user, host), tls_requires)
+        privileges_grant(module, cursor, user, host, "*.*", get_grants(cursor, user, host), tls_requires)
 
     final_attributes = None
 
@@ -298,7 +298,7 @@ def user_mod(cursor, user, host, host_all, password, encrypted,
     grant_option = False
 
     # Determine what user management method server uses
-    impl = get_user_implementation(cursor)
+    impl = get_user_implementation(module, cursor)
     old_user_mgmt = impl.use_old_user_mgmt(cursor)
 
     if host_all and not role:
@@ -486,7 +486,7 @@ def user_mod(cursor, user, host, host_all, password, encrypted,
                     if db_table not in curr_priv:
                         msg = "New privileges granted"
                         if not module.check_mode:
-                            privileges_grant(cursor, user, host, db_table, priv, tls_requires, maria_role)
+                            privileges_grant(module, cursor, user, host, db_table, priv, tls_requires, maria_role)
                         changed = True
 
             # If the db.table specification exists in both the user's current privileges
@@ -529,7 +529,7 @@ def user_mod(cursor, user, host, host_all, password, encrypted,
                         if len(revoke_privs) > 0:
                             privileges_revoke(cursor, user, host, db_table, revoke_privs, grant_option, maria_role)
                         if len(grant_privs) > 0:
-                            privileges_grant(cursor, user, host, db_table, grant_privs, tls_requires, maria_role)
+                            privileges_grant(module, cursor, user, host, db_table, grant_privs, tls_requires, maria_role)
                     else:
                         changed = True
 
@@ -920,7 +920,7 @@ def privileges_revoke(cursor, user, host, db_table, priv, grant_option, maria_ro
     cursor.execute("FLUSH PRIVILEGES")
 
 
-def privileges_grant(cursor, user, host, db_table, priv, tls_requires, maria_role=False):
+def privileges_grant(module, cursor, user, host, db_table, priv, tls_requires, maria_role=False):
     # Escape '%' since mysql db.execute uses a format string and the
     # specification of db and table often use a % (SQL wildcard)
     db_table = db_table.replace('%', '%%')
@@ -942,7 +942,7 @@ def privileges_grant(cursor, user, host, db_table, priv, tls_requires, maria_rol
         query.append("TO %s")
         params = (user)
 
-    impl = get_user_implementation(cursor)
+    impl = get_user_implementation(module, cursor)
     if tls_requires and impl.use_old_user_mgmt(cursor):
         query, params = mogrify_requires(" ".join(query), params, tls_requires)
         query = [query]
@@ -1079,7 +1079,7 @@ def limit_resources(module, cursor, user, host, resource_limits, check_mode):
 
     Returns: True, if changed, False otherwise.
     """
-    impl = get_user_implementation(cursor)
+    impl = get_user_implementation(module, cursor)
     if not impl.server_supports_alter_user(cursor):
         module.fail_json(msg="The server version does not match the requirements "
                              "for resource_limits parameter. See module's documentation.")
@@ -1215,8 +1215,8 @@ def attributes_get(cursor, user, host):
     return j if j else None
 
 
-def get_user_implementation(cursor):
-    db_engine = get_server_implementation(cursor)
+def get_user_implementation(module, cursor):
+    db_engine = get_server_implementation(module, cursor)
     if db_engine == 'mariadb':
         from ansible_collections.ansible.mysql.plugins.module_utils.implementations.mariadb import user as mariauser
         return mariauser

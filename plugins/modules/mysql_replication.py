@@ -566,7 +566,7 @@ def main():
             module.fail_json(msg="unable to find %s. Exception message: %s" % (config_file, to_native(e)))
 
     server_version = get_server_version(cursor)
-    server_implementation = get_server_implementation(cursor)
+    server_implementation = get_server_implementation(module, cursor)
     command_resolver = CommandResolver(server_implementation, server_version)
     cursor.execute("SELECT VERSION()")
     if server_implementation == 'mariadb':

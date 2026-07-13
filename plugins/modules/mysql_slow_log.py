@@ -381,7 +381,7 @@ def main():
         'min_examined_row_limit': module.params['min_examined_row_limit'],
     }
 
-    slow_log = MySQLSlowLog(module, cursor, get_server_implementation(cursor))
+    slow_log = MySQLSlowLog(module, cursor, get_server_implementation(module, cursor))
 
     module.exit_json(
         **slow_log.configure(

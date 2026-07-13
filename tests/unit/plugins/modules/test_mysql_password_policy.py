@@ -384,7 +384,7 @@ def test_main_rejects_persist_mode_for_old_mysql(monkeypatch):
         monkeypatch.setattr(AnsibleModule, 'fail_json', fail_json)
         monkeypatch.setattr(mysql_password_policy, 'mysql_driver', object())
         monkeypatch.setattr(mysql_password_policy, 'mysql_connect', lambda *args, **kwargs: (MagicMock(), MagicMock()))
-        monkeypatch.setattr(mysql_password_policy, 'get_server_implementation', lambda cursor: 'mysql')
+        monkeypatch.setattr(mysql_password_policy, 'get_server_implementation', lambda module, cursor: 'mysql')
         monkeypatch.setattr(mysql_password_policy, 'get_server_version', lambda cursor: '5.7.44')
 
         with pytest.raises(AnsibleFailJson) as exc:
@@ -404,7 +404,7 @@ def test_main_returns_configure_result(monkeypatch):
         monkeypatch.setattr(AnsibleModule, 'fail_json', fail_json)
         monkeypatch.setattr(mysql_password_policy, 'mysql_driver', object())
         monkeypatch.setattr(mysql_password_policy, 'mysql_connect', lambda *args, **kwargs: (MagicMock(), MagicMock()))
-        monkeypatch.setattr(mysql_password_policy, 'get_server_implementation', lambda cursor: 'mariadb')
+        monkeypatch.setattr(mysql_password_policy, 'get_server_implementation', lambda module, cursor: 'mariadb')
 
         def fake_configure(self, desired_settings, mode='global', check_mode=False):
             assert desired_settings['length'] == 12
