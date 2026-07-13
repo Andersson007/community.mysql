@@ -362,7 +362,7 @@ def main():
     connection = None
     try:
         cursor, connection = _connect(module)
-        server_implementation = get_server_implementation(cursor)
+        server_implementation = get_server_implementation(module, cursor)
         server_version = get_server_version(cursor)
         validate_clone_support(module, server_implementation, server_version)
         ensure_clone_plugin_active(module, cursor)

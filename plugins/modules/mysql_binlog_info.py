@@ -327,7 +327,7 @@ def main():
                 "Exception message: %s" % (config_file, to_native(e))
         )
 
-    server_implementation = get_server_implementation(cursor)
+    server_implementation = get_server_implementation(module, cursor)
     server_version = get_server_version(cursor)
 
     mysql = MySQL_Binlog_Info(module, cursor, server_implementation, server_version)

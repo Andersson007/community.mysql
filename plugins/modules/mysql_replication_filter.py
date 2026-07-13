@@ -589,7 +589,7 @@ def main():
     executor = MySQLReplicationFilter(
         module,
         cursor,
-        get_server_implementation(cursor),
+        get_server_implementation(module, cursor),
         get_server_version(cursor),
     )
 

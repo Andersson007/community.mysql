@@ -390,7 +390,7 @@ def main():
                 "Exception message: %s" % (module.params['config_file'], to_native(exc))
         )
 
-    server_implementation = get_server_implementation(cursor)
+    server_implementation = get_server_implementation(module, cursor)
     if server_implementation == 'mysql':
         server_version = get_server_version(cursor).split('-', 1)[0]
         if module.params['mode'] == 'persist' and LooseVersion(server_version) < LooseVersion('8.0'):

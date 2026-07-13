@@ -785,7 +785,7 @@ def main():
                'Exception message: %s' % (connector_name, connector_version, config_file, to_native(e)))
         module.fail_json(msg)
 
-    server_implementation = get_server_implementation(cursor)
+    server_implementation = get_server_implementation(module, cursor)
     server_version = get_server_version(cursor)
     user_implementation = get_user_implementation(cursor)
 
