@@ -1,12 +1,16 @@
-# MySQL and MariaDB collection for Ansible
+# MySQL collection for Ansible
 [![Plugins CI](https://github.com/ansible-collections/ansible.mysql/actions/workflows/ansible-test-plugins.yml/badge.svg?event=push)](https://github.com/ansible-collections/ansible.mysql/actions?query=workflow%3A"Plugins+CI") [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/ansible.mysql)](https://codecov.io/gh/ansible-collections/ansible.mysql) [![Discuss on Matrix at #mysql:ansible.com](https://img.shields.io/matrix/mysql:ansible.com.svg?server_fqdn=matrix.org&label=Discuss%20on%20Matrix%20at%20%23mysql:ansible.com&logo=matrix)](https://matrix.to/#/#mysql:ansible.com)
 
 This collection is a part of the Ansible package.
 
+> [!IMPORTANT]
+> For MariaDB automation, use the [ansible.mariadb](https://github.com/ansible-collections/ansible.mariadb) collection instead! If you already use this collection with MariaDB, please change FQCNs in tasks in your playbooks, for example, `ansible.mysql.mysql_info` to `ansible.mariadb.mariadb_info`. No other changes are needed.
+> This collection was cloned to the [ansible.mariadb](https://github.com/ansible-collections/ansible.mariadb) collection to allow its contributors and maintainers to focus on MariaDB-related automation development. This `ansible.mysql` collection still supports MariaDB (only bugfixes and security fixes) until release 6.0.0 (not earlier than mid 2027), then its support will be dropped!
+
 ## Our mission
 
 The Ansible `ansible.mysql` collection goals are to produce and maintain simple,
-flexible, and powerful open-source software for automating MySQL and MariaDB related tasks
+flexible, and powerful open-source software for automating MySQL related tasks
 providing good documentation for easy deployment and use.
 
 ## Community standards
