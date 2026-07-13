@@ -216,6 +216,8 @@ def get_server_version(cursor):
 
 def get_server_implementation(module, cursor):
     if 'mariadb' in get_server_version(cursor).lower():
+        # TODO Remove this warning after MariaDB support is dropped
+        # https://github.com/ansible-collections/ansible.mysql/milestone/3
         module.warn("MariaDB has been detected: "
                     "its support will be dropped in 6.0.0. "
                     "For MariaDB automation, please use the ansible.mariadb collection instead.")

@@ -140,6 +140,7 @@ import warnings
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.ansible.mysql.plugins.module_utils.mysql import (
+    get_server_implementation,
     mysql_connect,
     mysql_common_argument_spec,
     mysql_driver,
@@ -243,6 +244,11 @@ def main():
         module.fail_json(msg="unable to connect to database, check login_user and "
                              "login_password are correct or %s has the credentials. "
                              "Exception message: %s" % (config_file, to_native(e)))
+
+    # TODO Remove this warning after MariaDB support is dropped in this collection
+    # https://github.com/ansible-collections/ansible.mysql/milestone/3
+    # Its only purpose here is to show a warning when MariaDB is used.
+    get_server_implementation(module, cursor)
 
     # Set defaults:
     changed = False
