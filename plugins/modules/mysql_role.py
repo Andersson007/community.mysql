@@ -806,7 +806,7 @@ class Role():
 
         if privs:
             for db_table, priv in privs.items():
-                privileges_grant(self.cursor, self.name, self.host,
+                privileges_grant(self.module, self.cursor, self.name, self.host,
                                  db_table, priv, tls_requires=None,
                                  maria_role=self.is_mariadb)
 
@@ -1071,7 +1071,7 @@ def main():
     # Set defaults
     changed = False
 
-    impl = get_user_implementation(cursor)
+    impl = get_user_implementation(module, cursor)
 
     if priv is not None:
         try:

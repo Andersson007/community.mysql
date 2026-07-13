@@ -787,7 +787,7 @@ def main():
 
     server_implementation = get_server_implementation(module, cursor)
     server_version = get_server_version(cursor)
-    user_implementation = get_user_implementation(cursor)
+    user_implementation = get_user_implementation(module, cursor)
 
     ###############################
     # Create object and do main job

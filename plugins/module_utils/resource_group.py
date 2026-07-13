@@ -26,7 +26,7 @@ def get_server_version_tuple(cursor):
 
 
 def ensure_resource_groups_supported(module, cursor):
-    if get_server_implementation(cursor) != 'mysql':
+    if get_server_implementation(module, cursor) != 'mysql':
         module.fail_json(msg='Resource groups are supported only by MySQL 8.0 or later.')
 
     if get_server_version_tuple(cursor) < (8, 0, 0):
