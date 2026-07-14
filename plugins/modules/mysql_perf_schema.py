@@ -266,6 +266,7 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.common.text.converters import to_native
 
 from ansible_collections.ansible.mysql.plugins.module_utils.mysql import (
+    get_server_implementation,
     mysql_common_argument_spec,
     mysql_connect,
     mysql_driver,
@@ -393,6 +394,11 @@ def main():
         )
     except Exception as e:
         module.fail_json(msg='unable to connect to database: %s' % to_native(e))
+
+    # TODO Remove this warning after MariaDB support is dropped in this collection
+    # https://github.com/ansible-collections/ansible.mysql/milestone/3
+    # Its only purpose here is to show a warning when MariaDB is used.
+    get_server_implementation(module, cursor)
 
     executor = MySQLPerfSchema(module, cursor)
 

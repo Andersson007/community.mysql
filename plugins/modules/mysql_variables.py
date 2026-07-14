@@ -102,7 +102,13 @@ from re import match
 
 from ansible.module_utils.basic import AnsibleModule
 from ansible_collections.ansible.mysql.plugins.module_utils.database import SQLParseError, mysql_quote_identifier
-from ansible_collections.ansible.mysql.plugins.module_utils.mysql import mysql_connect, mysql_driver, mysql_driver_fail_msg, mysql_common_argument_spec
+from ansible_collections.ansible.mysql.plugins.module_utils.mysql import (
+    get_server_implementation,
+    mysql_connect,
+    mysql_driver,
+    mysql_driver_fail_msg,
+    mysql_common_argument_spec,
+)
 from ansible.module_utils.common.text.converters import to_native
 
 executed_queries = []
@@ -243,6 +249,11 @@ def main():
                                   "Exception message: %s" % (config_file, to_native(e))))
         else:
             module.fail_json(msg="unable to find %s. Exception message: %s" % (config_file, to_native(e)))
+
+    # TODO Remove this warning after MariaDB support is dropped in this collection
+    # https://github.com/ansible-collections/ansible.mysql/milestone/3
+    # Its only purpose here is to show a warning when MariaDB is used.
+    get_server_implementation(module, cursor)
 
     mysqlvar_val = None
     var_in_mysqld_auto_cnf = None
