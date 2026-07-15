@@ -6,7 +6,8 @@ When official documentation is not explicitly provided or it's insufficient, you
 
 ## What This Project Is
 
-An Ansible collection (`ansible.mysql`) providing modules for managing MySQL and MariaDB databases. No roles exist — only modules and shared utilities.
+An Ansible collection (`ansible.mysql`) providing modules for managing MySQL databases. No roles exist — only modules and shared utilities.
+It still supports MariaDB (only bug- and security fixes) until collection version 6.0.0.
 
 ## Development Environment
 

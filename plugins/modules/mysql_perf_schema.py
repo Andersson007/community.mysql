@@ -14,6 +14,7 @@ module: mysql_perf_schema
 short_description: Manage MySQL or MariaDB Performance Schema setup tables
 
 description:
+  - "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_perf_schema) instead."
   - Manage runtime Performance Schema configuration through setup tables.
   - Supports instruments, consumers, actors, and objects.
   - Reconciles only the rows requested in the task and leaves unrelated rows untouched.

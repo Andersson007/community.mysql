@@ -12,6 +12,7 @@ DOCUMENTATION = r'''
 module: mysql_query
 short_description: Run MySQL or MariaDB queries
 description:
+- "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_query) instead."
 - Runs arbitrary MySQL or MariaDB queries.
 - Pay attention, the module does not support check mode!
   All queries will be executed in autocommit mode.

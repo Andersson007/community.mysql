@@ -13,6 +13,7 @@ DOCUMENTATION = r'''
 module: mysql_db
 short_description: Add or remove MySQL or MariaDB databases from a remote host
 description:
+- "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_db) instead."
 - Add or remove MySQL or MariaDB databases from a remote host.
 options:
   name:

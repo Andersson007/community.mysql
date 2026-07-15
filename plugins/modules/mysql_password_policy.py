@@ -14,6 +14,7 @@ module: mysql_password_policy
 short_description: Manage MySQL or MariaDB password policy settings
 
 description:
+  - "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_password_policy) instead."
   - Manage password policy settings on MySQL or MariaDB.
   - This module is configuration-only and does not install or uninstall password validation components or plugins.
   - On MySQL, the module manages C(validate_password) settings and related global password policy variables.

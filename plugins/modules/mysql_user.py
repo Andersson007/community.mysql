@@ -13,6 +13,7 @@ DOCUMENTATION = r'''
 module: mysql_user
 short_description: Adds or removes a user from a MySQL or MariaDB database
 description:
+   - "Important: MariaDB support will be dropped in collection version 6.0.0. Use the M(ansible.mariadb.mariadb_user) instead."
    - Adds or removes a user from a MySQL or MariaDB database.
 options:
   name:
