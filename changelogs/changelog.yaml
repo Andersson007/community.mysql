@@ -808,3 +808,47 @@ releases:
       name: mysql_slow_log
       namespace: ''
     release_date: '2026-06-25'
+  5.2.0:
+    changes:
+      major_changes:
+      - MariaDB support is deprecated and is scheduled for removal in version 6.0.0
+        of this collection. If you already use this collection with MariaDB, please
+        install the `ansible.mariadb` collection from Ansible Galaxy and change FQCNs
+        in tasks in your playbooks to use ansible.mariadb equivalents, for example,
+        `ansible.mysql.mysql_info` -> `ansible.mariadb.mariadb_info`, etc. No other
+        changes are needed. This collection was cloned to the `ansible.mariadb` collection
+        to allow its contributors and maintainers to focus on MariaDB-related automation
+        development. This `ansible.mysql` collection still supports MariaDB (only
+        bugfixes and security fixes) until its release 6.0.0 (not earlier than mid
+        2027), then its support will be dropped!
+      minor_changes:
+      - modules - add a warning to redirect users to use ansible.mariadb when a MariaDB
+        server is detected (https://github.com/ansible-collections/ansible.mysql/issues/845).
+      release_summary: 'This is a minor release of the ``ansible.mysql`` collection.
+
+        This changelog contains all changes that have been made to this collection
+        after the previous release.'
+    fragments:
+    - 0-mariadb_detection.yml
+    - 5.2.0.yml
+    - mariadb.yml
+    modules:
+    - description: Manage MySQL table partitions
+      name: mysql_partition
+      namespace: ''
+    - description: Manage MySQL or MariaDB password policy settings
+      name: mysql_password_policy
+      namespace: ''
+    - description: Manage MySQL or MariaDB replication filters
+      name: mysql_replication_filter
+      namespace: ''
+    - description: Manage MySQL InnoDB general tablespaces
+      name: mysql_tablespace
+      namespace: ''
+    - description: Gather MySQL tablespace information
+      name: mysql_tablespace_info
+      namespace: ''
+    - description: Manage MySQL TLS runtime settings
+      name: mysql_tls
+      namespace: ''
+    release_date: '2026-07-16'
