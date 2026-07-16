@@ -1,2 +1,0 @@
-minor_changes:
-  - modules - add a warning to redirect users to use ansible.mariadb when a MariaDB server is detected (https://github.com/ansible-collections/ansible.mysql/issues/845).

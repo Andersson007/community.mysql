@@ -6,6 +6,35 @@ Community MySQL and MariaDB Collection Release Notes
 
 This changelog describes changes after version 2.0.0.
 
+v5.2.0
+======
+
+Release Summary
+---------------
+
+This is a minor release of the ``ansible.mysql`` collection.
+This changelog contains all changes that have been made to this collection after the previous release.
+
+Major Changes
+-------------
+
+- MariaDB support is deprecated and is scheduled for removal in version 6.0.0 of this collection. If you already use this collection with MariaDB, please install the `ansible.mariadb` collection from Ansible Galaxy and change FQCNs in tasks in your playbooks to use ansible.mariadb equivalents, for example, `ansible.mysql.mysql_info` -> `ansible.mariadb.mariadb_info`, etc. No other changes are needed. This collection was cloned to the `ansible.mariadb` collection to allow its contributors and maintainers to focus on MariaDB-related automation development. This `ansible.mysql` collection still supports MariaDB (only bugfixes and security fixes) until its release 6.0.0 (not earlier than mid 2027), then its support will be dropped!
+
+Minor Changes
+-------------
+
+- modules - add a warning to redirect users to use ansible.mariadb when a MariaDB server is detected (https://github.com/ansible-collections/ansible.mysql/issues/845).
+
+New Modules
+-----------
+
+- mysql_partition - Manage MySQL table partitions
+- mysql_password_policy - Manage MySQL or MariaDB password policy settings
+- mysql_replication_filter - Manage MySQL or MariaDB replication filters
+- mysql_tablespace - Manage MySQL InnoDB general tablespaces
+- mysql_tablespace_info - Gather MySQL tablespace information
+- mysql_tls - Manage MySQL TLS runtime settings
+
 v5.1.0
 ======
 
